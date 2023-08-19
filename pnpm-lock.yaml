@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@fontsource/italiana':
+    specifier: ^5.0.8
+    version: 5.0.8
+  '@fontsource/libre-franklin':
+    specifier: ^5.0.8
+    version: 5.0.8
   '@types/node':
     specifier: 20.4.9
     version: 20.4.9
@@ -336,6 +342,14 @@ packages:
   /@eslint/js@8.46.0:
     resolution: {integrity: sha512-a8TLtmPi8xzPkCbp/OGFUo5yhRkHM2Ko9kOWP4znJr0WAhWyThaw3PnwX4vOTWOAMsV2uRt32PPDcEz63esSaA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: false
+
+  /@fontsource/italiana@5.0.8:
+    resolution: {integrity: sha512-QDlbmrTKBreU+ygWs6WjDa5GTyjy0atDOz3V3f3N+zHtwMoz/KBKmHTidcfsRl+hooQhgFqvsh5RklcFy7eHyA==}
+    dev: false
+
+  /@fontsource/libre-franklin@5.0.8:
+    resolution: {integrity: sha512-CGSjjPHbnOqU7AK3X+iuywL3Nwda69cZCWJr2bybWdZpUsuZIoUt/y69sU+jzkrjGr+yixiGSB8VFsLVNXKmXQ==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.10:

@@ -1,3 +1,6 @@
+@import "@fontsource/italiana";
+@import "@fontsource/libre-franklin";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

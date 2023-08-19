@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 const config: Config = {
   content: [
@@ -10,6 +11,10 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#a32d17",
+      },
+      fontFamily: {
+        italiana: "italiana, serif",
+        sans: ["libre-franklin", ...defaultTheme.fontFamily.sans],
       },
     },
   },
