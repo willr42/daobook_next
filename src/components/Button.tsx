@@ -9,13 +9,13 @@ type ButtonProps = {
 
 const ButtonColor = {
   primary:
-    "border-primary bg-slate-100 ring-primary/50 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700",
+    "border-primary bg-slate-100 ring-primary/50 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700",
   outline:
-    "border-black bg-slate-100 ring-black/50 transition-colors hover:bg-slate-200 dark:border-white dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700",
+    "border-black bg-slate-100 ring-black/50 hover:bg-slate-200 dark:border-white dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700",
 };
 
 const everyButton =
-  "border-4 rounded-2xl font-sans font-semibold shadow-md p-2 focus:ring transition-transform active:scale-95";
+  "border-4 rounded-2xl font-sans font-semibold shadow-md p-2 focus:ring transition active:scale-95";
 
 const Button = ({ buttonText, buttonTheme, onClick }: ButtonProps) => {
   if (!buttonTheme) {
