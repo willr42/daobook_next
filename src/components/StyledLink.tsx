@@ -13,7 +13,7 @@ const StyledLink = ({ linkText, href, replace, scroll, prefetch, className }: St
   return (
     <Link
       className={
-        "border-2 rounded-2xl font-sans font-semibold shadow-md p-2 focus:ring transition-transform active:scale-95 border-slate-400 bg-slate-100 ring-black/50 transition-color hover:bg-slate-200 dark:border-white dark:text-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 " +
+        "transition-color rounded-2xl border-2 border-slate-400 bg-slate-100 p-2 font-sans font-semibold shadow-md ring-black/50 transition-transform hover:bg-slate-200 focus:ring active:scale-95 dark:border-white dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700 " +
         className
       }
       href={href}
