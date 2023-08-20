@@ -49,6 +49,35 @@ CREATE TABLE public.users (
     updated_at timestamp without time zone DEFAULT now()
 );
 
+CREATE TABLE public.accounts (
+    account_id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
+    user_id uuid,
+    type text,
+    provider text,
+    providerAccountId text,
+    refresh_token text,
+    access_token text,
+    expires_at int,
+    token_type text,
+    scope text,
+    id_token text,
+    session_state text
+);
+
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT accounts_user_id FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+
+
+CREATE TABLE public.sessions (
+    session_id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
+    expires timestamp without time zone,
+    sessionToken text,
+    user_id uuid
+);
+
+ALTER TABLE ONLY public.sessions
+    ADD CONSTRAINT sessions_user_id FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+
 ALTER TABLE ONLY public.roles ALTER COLUMN role_id SET DEFAULT nextval('public.roles_role_id_seq'::regclass);
 
 SELECT pg_catalog.setval('public.consults_consult_id_seq', 1, false);
