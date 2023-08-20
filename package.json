@@ -11,8 +11,6 @@
     "db:seed": "psql -U daoadmin -d daobook -f src/db/drop.sql && psql -U daoadmin -d daobook -f src/db/create.sql"
   },
   "dependencies": {
-    "@fontsource/italiana": "^5.0.8",
-    "@fontsource/libre-franklin": "^5.0.8",
     "@types/node": "20.4.9",
     "@types/react": "18.2.19",
     "@types/react-dom": "18.2.7",

@@ -13,8 +13,8 @@ const config: Config = {
         primary: "#a32d17",
       },
       fontFamily: {
-        italiana: "italiana, serif",
-        sans: ["libre-franklin", ...defaultTheme.fontFamily.sans],
+        italiana: ["var(--font-italiana)", "serif"],
+        sans: ["var(--font-libre-franklin)", ...defaultTheme.fontFamily.sans],
       },
     },
   },
