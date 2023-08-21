@@ -11,7 +11,7 @@ const createDoctorUser = async (db: postgres.Sql, doctor: DoctorUser) => {
       users (pass, role_id, first_name, last_name, email) 
       VALUES
       (${doctor.pass}, ${doctor.role_id}, ${doctor.first_name}, ${doctor.last_name}, ${doctor.email})
-      RETURNING user_id
+      RETURNING user_id, email, email_verified
   `;
 
     const [doctorDoctor] = await db`
@@ -20,7 +20,14 @@ const createDoctorUser = async (db: postgres.Sql, doctor: DoctorUser) => {
         VALUES
         (${doctorUser.user_id}, ${doctor.ahpra})
         RETURNING *`;
-    return doctorDoctor;
+
+    const finalDoctor = {
+      id: doctorUser.user_id,
+      email: doctorUser.email,
+      emailVerified: doctorUser.email_verified,
+    };
+
+    return finalDoctor;
   });
   return createdDoctor;
 };
@@ -36,7 +43,7 @@ const createPatientUser = async (db: postgres.Sql, patient: PatientUser) => {
       users (pass, role_id, first_name, last_name, email) 
       VALUES
       (${patient.pass}, ${patient.role_id}, ${patient.first_name}, ${patient.last_name}, ${patient.email})
-      RETURNING user_id
+      RETURNING user_id, role_id, first_name, last_name, email, email_verified
   `;
 
     const [patientPatient] = await db`
@@ -45,7 +52,14 @@ const createPatientUser = async (db: postgres.Sql, patient: PatientUser) => {
         VALUES
         (${patientUser.user_id}, ${patient.dob})
         RETURNING *`;
-    return patientPatient;
+
+    const finalPatient = {
+      id: patientPatient.patient_id,
+      email: patientUser.email,
+      emailVerified: patientUser.email_verified,
+    };
+
+    return finalPatient;
   });
   return createdPatient;
 };

@@ -45,7 +45,7 @@ CREATE TABLE public.users (
     first_name text,
     last_name text,
     email text,
-    email_verified timestamp without time zone DEFAULT now(),
+    email_verified timestamp without time zone DEFAULT NULL,
     updated_at timestamp without time zone DEFAULT now()
 );
 
