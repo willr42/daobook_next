@@ -1,13 +1,14 @@
 import sql from "@/db/db";
 import postgres from "postgres";
 import * as argon2 from "argon2";
-import { createDoctorUser, createPatient, getUserByEmail, getUserById } from "./userQueries";
+import { createUser, createPatient, updateUserData } from "./userQueries";
 import { createConsult } from "./consultQueries";
+import { Patient, PatientDatabase, User, Consult, UserToInsert } from "@/types";
 
 const seedUsers = async (sql: postgres.Sql) => {
   const userHash = await argon2.hash("doctorPass");
 
-  const doctorToInsert: User = {
+  const doctorToInsert: UserToInsert = {
     firstName: "doctorFirst",
     lastName: "doctorLast",
     email: "testDoctor@example.com",
@@ -16,7 +17,7 @@ const seedUsers = async (sql: postgres.Sql) => {
     ahpra: "MED0001206214",
   };
 
-  const doctorUser = await createDoctorUser(sql, doctorToInsert);
+  const doctorUser = await createUser(sql, doctorToInsert);
 
   const patientDob = new Date(1993, 7, 15);
 
@@ -36,14 +37,14 @@ const seedUsers = async (sql: postgres.Sql) => {
 };
 
 type usersObj = {
-  doctorUser: UserDatabase;
+  doctorUser: User;
   patient: PatientDatabase;
 };
 
 const seedConsults = async (sql: postgres.Sql, usersObj: usersObj) => {
   const consultToInsert: Consult = {
     patientId: usersObj.patient.patientId,
-    userId: usersObj.doctorUser.userId,
+    id: usersObj.doctorUser.id,
     consultTime: new Date(2023, 5, 5, 9, 30),
     mainComplaint: "Test main complaint",
     tongue: "Test tongue value",
@@ -60,9 +61,14 @@ const seedConsults = async (sql: postgres.Sql, usersObj: usersObj) => {
 const runSeed = async (sql: postgres.Sql) => {
   try {
     const usersObj = await seedUsers(sql);
-    console.log(usersObj);
     const consultObj = await seedConsults(sql, usersObj);
-    console.log(consultObj);
+    const userUpdate = {
+      ...usersObj.doctorUser,
+      firstName: "updatedFirst",
+      lastName: "updatedLast",
+    };
+    const updatedUser = await updateUserData(sql, userUpdate);
+    console.log(updatedUser);
   } catch (error) {
     console.error(error);
   }
