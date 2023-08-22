@@ -2,9 +2,9 @@ import { Patient, User, UserToInsert } from "@/types";
 import postgres from "postgres";
 
 const createUser = async (db: postgres.Sql, doctor: UserToInsert) => {
-    if (!doctor.pass) {
-      throw new Error("No password provided");
-    }
+  if (!doctor.pass) {
+    throw new Error("No password provided");
+  }
 
   const [dbUser]: [User?] = await db`
       INSERT INTO
@@ -16,7 +16,7 @@ const createUser = async (db: postgres.Sql, doctor: UserToInsert) => {
     throw new Error("Something went wrong in creation");
   }
 
-    return dbUser;
+  return dbUser;
 };
 
 const createPatient = async (db: postgres.Sql, patient: Patient) => {
@@ -29,7 +29,7 @@ const createPatient = async (db: postgres.Sql, patient: Patient) => {
   if (!dbPatient) {
     throw new Error("Something went wrong in creation");
   }
-    return dbPatient;
+  return dbPatient;
 };
 
 const getUserCols = ["id", "role", "firstName", "lastName", "email", "emailVerified"];
@@ -60,7 +60,32 @@ const getUserByEmail = async (db: postgres.Sql, email: string) => {
   return foundUser;
 };
 
+const getUserByAccount = async (db: postgres.Sql, providerAccountId: string) => {
+  const [foundUser]: [User?] = await db`
+  SELECT ${db(getUserCols)}
+  FROM users
+  JOIN accounts ON users.id = accounts.id
+  WHERE accounts.providerAccountId = ${providerAccountId}`;
+
+  if (!foundUser) {
+    throw new Error("User not found");
+  }
 
   return foundUser;
 };
-export { createDoctorUser, createPatient, getUserByEmail, getUserById };
+
+const updateUserData = async (db: postgres.Sql, user: User) => {
+  const [updatedUser]: [User?] = await db`
+  UPDATE users
+  SET ${db(user)}
+  WHERE id = ${user.id}
+  RETURNING id, first_name, last_name, email, email_verified, ahpra, role`;
+
+  if (!updatedUser) {
+    throw new Error("User not updated");
+  }
+
+  return updatedUser;
+};
+
+export { createUser, createPatient, getUserByEmail, getUserById, getUserByAccount, updateUserData };
