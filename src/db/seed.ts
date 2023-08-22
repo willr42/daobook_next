@@ -1,7 +1,7 @@
 import sql from "@/db/db";
 import postgres from "postgres";
 import * as argon2 from "argon2";
-import { createDoctorUser, createPatient } from "./userQueries";
+import { createDoctorUser, createPatient, getUserByEmail, getUserById } from "./userQueries";
 import { createConsult } from "./consultQueries";
 
 const seedUsers = async (sql: postgres.Sql) => {
