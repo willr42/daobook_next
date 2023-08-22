@@ -1,34 +1,38 @@
 interface User {
-  role_id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  role: string;
+  ahpra: string;
   pass?: string;
 }
 
-interface DoctorUser extends User {
-  ahpra: string;
+interface UserDatabase extends User {
+  userId: string;
+  emailVerified: Date;
+  updatedAt?: Date;
 }
 
-interface PatientUser extends User {
+interface Patient {
+  firstName: string;
+  lastName: string;
+  email: string;
   dob: Date;
 }
 
-interface UserDatabase extends User {
-  user_id: number;
-  created_at: Date;
-  updated_at: Date;
+interface PatientDatabase extends Patient {
+  patientId: string;
 }
 
 type Consult = {
-  patient_id: number;
-  doctor_id: number;
-  consult_time: Date;
-  main_complaint: string;
+  patientId: string;
+  userId: string;
+  consultTime: Date;
+  mainComplaint: string;
   tongue: string;
   pulse: string;
-  prescription_name: string;
-  prescription_composition: string;
-  prescription_dosage: string;
-  prescription_notes: string;
+  prescriptionName: string;
+  prescriptionComposition: string;
+  prescriptionDosage: string;
+  prescriptionNotes: string;
 };
