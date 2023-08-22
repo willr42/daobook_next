@@ -3,7 +3,7 @@ CREATE SCHEMA public;
 CREATE TABLE public.consults (
     consult_id serial PRIMARY KEY NOT NULL,
     patient_id uuid,
-    user_id uuid,
+    id uuid,
     consult_time timestamp without time zone,
     main_complaint text,
     tongue text,
@@ -24,7 +24,7 @@ CREATE TABLE public.patients (
 
 
 CREATE TABLE public.users (
-    user_id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
+    id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
     pass text,
     role text,
     first_name text,
@@ -37,7 +37,7 @@ CREATE TABLE public.users (
 
 CREATE TABLE public.accounts (
     account_id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    user_id uuid,
+    id uuid,
     type text,
     provider text,
     providerAccountId text,
@@ -54,17 +54,17 @@ CREATE TABLE public.sessions (
     session_id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
     expires timestamp without time zone,
     sessionToken text,
-    user_id uuid
+    id uuid
 );
 
 ALTER TABLE ONLY public.accounts
-    ADD CONSTRAINT accounts_user_id FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+    ADD CONSTRAINT accounts_id FOREIGN KEY (id) REFERENCES public.users(id);
 
 ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_user_id FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+    ADD CONSTRAINT sessions_id FOREIGN KEY (id) REFERENCES public.users(id);
 
 ALTER TABLE ONLY public.consults
-    ADD CONSTRAINT consult_user_id FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+    ADD CONSTRAINT consult_id FOREIGN KEY (id) REFERENCES public.users(id);
 
 ALTER TABLE ONLY public.consults
     ADD CONSTRAINT consult_patient_id FOREIGN KEY (patient_id) REFERENCES public.patients(patient_id);

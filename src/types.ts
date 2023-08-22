@@ -1,4 +1,6 @@
-interface User {
+import { AdapterUser } from "next-auth/adapters";
+
+export interface User extends AdapterUser {
   firstName: string;
   lastName: string;
   email: string;
@@ -7,26 +9,25 @@ interface User {
   pass?: string;
 }
 
-interface UserDatabase extends User {
-  userId: string;
-  emailVerified: Date;
-  updatedAt?: Date;
+export interface UserToInsert extends Partial<User> {
+  id?: string;
+  emailVerified?: Date;
 }
 
-interface Patient {
+export interface Patient {
   firstName: string;
   lastName: string;
   email: string;
   dob: Date;
 }
 
-interface PatientDatabase extends Patient {
+export interface PatientDatabase extends Patient {
   patientId: string;
 }
 
-type Consult = {
+export type Consult = {
   patientId: string;
-  userId: string;
+  id: string;
   consultTime: Date;
   mainComplaint: string;
   tongue: string;
