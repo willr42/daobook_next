@@ -1,4 +1,4 @@
-import { AdapterAccount, AdapterUser } from "next-auth/adapters";
+import { AdapterAccount, AdapterSession, AdapterUser } from "next-auth/adapters";
 
 export interface User extends AdapterUser {
   firstName: string;
@@ -53,3 +53,5 @@ export interface Account extends AdapterAccount {
   idToken: string;
   sessionState: string;
 }
+
+export interface Session extends AdapterSession {}
