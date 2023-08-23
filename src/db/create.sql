@@ -58,13 +58,13 @@ CREATE TABLE public.sessions (
 );
 
 ALTER TABLE ONLY public.accounts
-    ADD CONSTRAINT accounts_id FOREIGN KEY (id) REFERENCES public.users(id);
+    ADD CONSTRAINT accounts_id FOREIGN KEY (id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_id FOREIGN KEY (id) REFERENCES public.users(id);
+    ADD CONSTRAINT sessions_id FOREIGN KEY (id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY public.consults
-    ADD CONSTRAINT consult_id FOREIGN KEY (id) REFERENCES public.users(id);
+    ADD CONSTRAINT consult_id FOREIGN KEY (id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY public.consults
-    ADD CONSTRAINT consult_patient_id FOREIGN KEY (patient_id) REFERENCES public.patients(patient_id);
+    ADD CONSTRAINT consult_patient_id FOREIGN KEY (patient_id) REFERENCES public.patients(patient_id) ON DELETE CASCADE;
