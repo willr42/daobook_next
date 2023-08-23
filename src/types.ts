@@ -1,4 +1,4 @@
-import { AdapterUser } from "next-auth/adapters";
+import { AdapterAccount, AdapterUser } from "next-auth/adapters";
 
 export interface User extends AdapterUser {
   firstName: string;
@@ -37,3 +37,19 @@ export type Consult = {
   prescriptionDosage: string;
   prescriptionNotes: string;
 };
+
+type ProviderType = "email" | "oauth" | "credentials";
+
+export interface Account extends AdapterAccount {
+  id: string;
+  type: ProviderType;
+  provider: string;
+  providerAccountId: string;
+  refreshToken: string;
+  accessToken: string;
+  expiresAt: Date;
+  tokenType: string;
+  scope: string;
+  idToken: string;
+  sessionState: string;
+}
