@@ -8,7 +8,16 @@ import {
   updateUserData,
 } from "./userQueries";
 import { User, Account } from "@/types";
-import { createAccount, unlinkAccount } from "./accountQueries";
+import {
+  createAccount,
+  createSession,
+  createVerificationToken,
+  deleteSession,
+  getSessionAndUser,
+  unlinkAccount,
+  updateSession,
+  UseVerificationToken,
+} from "./authQueries";
 
 /** @return { import("next-auth/adapters").Adapter } */
 export default function MyAdapter(client: postgres.Sql, options = {}) {
@@ -52,29 +61,35 @@ export default function MyAdapter(client: postgres.Sql, options = {}) {
       const deletedAccountCount = await unlinkAccount(client, providerAccountId);
       return deletedAccountCount;
     },
-    //TODO insert new session into DB
+
     async createSession({ sessionToken, userId, expires }) {
-      return;
+      const createdSession = await createSession(client, { sessionToken, userId, expires });
+      return createdSession;
     },
-    // TODO return {user: User, session:Session} from db
+
     async getSessionAndUser(sessionToken) {
-      return;
+      const sessionAndUser = await getSessionAndUser(client, sessionToken);
+      return sessionAndUser;
     },
-    // TODO update session info in db
+
     async updateSession({ sessionToken }) {
-      return;
+      const updatedSession = await updateSession(client, sessionToken);
+      return updatedSession;
     },
-    // TODO delete session from DB
+
     async deleteSession(sessionToken) {
-      return;
+      const deletedSessionCount = await deleteSession(client, sessionToken);
+      return deletedSessionCount;
     },
-    // TODO create verificationToken table, this is disconnected from all other tables
-    // identifier: string, token: string, expires: timestamp
+
     async createVerificationToken({ identifier, expires, token }) {
-      return;
+      const createdToken = await createVerificationToken(client, { identifier, expires, token });
+      return createdToken;
     },
+
     async useVerificationToken({ identifier, token }) {
-      return;
+      const foundToken = await UseVerificationToken(client, { identifier, token });
+      return foundToken;
     },
   };
 }

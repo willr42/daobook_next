@@ -76,6 +76,30 @@ const deleteSession = async (db: postgres.Sql, sessionToken) => {
   return deletedSession.count;
 };
 
+const createVerificationToken = async (db: postgres.Sql, verificationTokenData) => {
+  const [verificationToken] = await db`
+      INSERT INTO
+      verification_tokens ${db(verificationTokenData)}
+      RETURNING *
+  `;
+
+  if (!verificationToken) {
+    throw new Error("Something went wrong in creation");
+  }
+
+  return verificationToken;
+};
+
+const UseVerificationToken = async (db: postgres.Sql, verificationTokenData) => {
+  const [foundToken] = await db`
+  SELECT ${db(["identifier", "expires", "token"])}
+  FROM verification_tokens
+  WHERE identifier = ${verificationTokenData.identifier}
+  AND WHERE token = ${verificationTokenData.token}`;
+
+  return foundToken;
+};
+
 export {
   createAccount,
   unlinkAccount,
@@ -83,4 +107,6 @@ export {
   getSessionAndUser,
   updateSession,
   deleteSession,
+  createVerificationToken,
+  UseVerificationToken,
 };
