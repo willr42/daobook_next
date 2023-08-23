@@ -88,4 +88,19 @@ const updateUserData = async (db: postgres.Sql, user: User) => {
   return updatedUser;
 };
 
-export { createUser, createPatient, getUserByEmail, getUserById, getUserByAccount, updateUserData };
+const deleteUser = async (db: postgres.Sql, userId: string) => {
+  const deletedUser = await db`
+  DELETE FROM users
+  WHERE id = ${userId}`;
+  return deletedUser.count;
+};
+
+export {
+  createUser,
+  createPatient,
+  getUserByEmail,
+  getUserById,
+  getUserByAccount,
+  updateUserData,
+  deleteUser,
+};
