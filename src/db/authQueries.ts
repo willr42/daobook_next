@@ -1,6 +1,6 @@
-import { Account, User } from "@/types";
-import { AdapterSession } from "next-auth/adapters";
+import { Account, Session, User } from "@/types";
 import postgres from "postgres";
+import { getUserById } from "./userQueries";
 
 const createAccount = async (db: postgres.Sql, account: Account) => {
   const [dbAccount]: [Account?] = await db`
@@ -23,13 +23,40 @@ const unlinkAccount = async (db: postgres.Sql, accountId: string) => {
   return deletedAccount.count;
 };
 
-const createSession = async (db: postgres.Sql, sessionData: AdapterSession) => {
-  const [createdSession]: [AdapterSession] = await db`
+const createSession = async (db: postgres.Sql, sessionData: Session) => {
+  const [createdSession]: [Session?] = await db`
   INSERT INTO
   sessions ${db(sessionData)}
   RETURNING *`;
 
+  if (!createdSession) {
+    return null;
+  }
+
   return createdSession;
+};
+
+const getSessionAndUser = async (db: postgres.Sql, sessionToken: string) => {
+  const sessionCols = ["id", "expires", "sessionToken", "userId"];
+  const [foundSession]: [Session?] = await db`
+  SELECT ${db(sessionCols)}
+  FROM sessions
+  WHERE session_token = ${sessionToken}`;
+
+  if (!foundSession) {
+    return null;
+  }
+
+  const foundUser = await getUserById(db, foundSession.userId);
+
+  if (!foundUser) {
+    return null;
+  }
+
+  return {
+    user: foundUser,
+    session: foundSession,
+  };
 };
 
 const updateSession = async (db: postgres.Sql, sessionData: AdapterSession) => {
@@ -49,4 +76,11 @@ const deleteSession = async (db: postgres.Sql, sessionToken) => {
   return deletedSession.count;
 };
 
-export { createAccount, unlinkAccount, createSession, updateSession, deleteSession };
+export {
+  createAccount,
+  unlinkAccount,
+  createSession,
+  getSessionAndUser,
+  updateSession,
+  deleteSession,
+};

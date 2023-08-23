@@ -53,7 +53,7 @@ CREATE TABLE public.accounts (
 CREATE TABLE public.sessions (
     id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
     expires timestamp without time zone,
-    sessionToken text,
+    session_token text,
     user_id uuid
 );
 
