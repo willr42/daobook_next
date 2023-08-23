@@ -36,11 +36,11 @@ CREATE TABLE public.users (
 );
 
 CREATE TABLE public.accounts (
-    account_id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    id uuid,
+    id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
+    user_id uuid,
     type text,
     provider text,
-    providerAccountId text,
+    provider_account_id text,
     refresh_token text,
     access_token text,
     expires_at int,
@@ -51,20 +51,20 @@ CREATE TABLE public.accounts (
 );
 
 CREATE TABLE public.sessions (
-    session_id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
+    id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
     expires timestamp without time zone,
     sessionToken text,
-    id uuid
+    user_id uuid
 );
 
 ALTER TABLE ONLY public.accounts
-    ADD CONSTRAINT accounts_id FOREIGN KEY (id) REFERENCES public.users(id) ON DELETE CASCADE;
+    ADD CONSTRAINT accounts_user_id FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_id FOREIGN KEY (id) REFERENCES public.users(id) ON DELETE CASCADE;
+    ADD CONSTRAINT sessions_user_id FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY public.consults
-    ADD CONSTRAINT consult_id FOREIGN KEY (id) REFERENCES public.users(id) ON DELETE CASCADE;
+    ADD CONSTRAINT consult_user_id FOREIGN KEY (id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY public.consults
     ADD CONSTRAINT consult_patient_id FOREIGN KEY (patient_id) REFERENCES public.patients(patient_id) ON DELETE CASCADE;
