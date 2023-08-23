@@ -1,6 +1,3 @@
-import Button from "@/components/Button";
-import DashboardButton from "@/components/DashboardButton";
-import StyledLink from "@/components/StyledLink";
 import TitleLockup from "@/components/TitleLockup";
 async function getData() {}
 
