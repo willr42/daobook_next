@@ -57,6 +57,12 @@ CREATE TABLE public.sessions (
     user_id uuid
 );
 
+CREATE TABLE public.verification_tokens (
+    token uuid PRIMARY KEY,
+    identifier text,
+    expires timestamp
+);
+
 ALTER TABLE ONLY public.accounts
     ADD CONSTRAINT accounts_user_id FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
