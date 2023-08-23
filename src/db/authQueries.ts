@@ -30,7 +30,7 @@ const createSession = async (db: postgres.Sql, sessionData: Session) => {
   RETURNING *`;
 
   if (!createdSession) {
-    return null;
+    throw new Error("Something went wrong");
   }
 
   return createdSession;

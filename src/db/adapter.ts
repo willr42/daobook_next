@@ -18,11 +18,13 @@ import {
   updateSession,
   UseVerificationToken,
 } from "./authQueries";
+import { VerificationToken } from "next-auth/adapters";
 
 /** @return { import("next-auth/adapters").Adapter } */
 export default function MyAdapter(client: postgres.Sql, options = {}) {
   return {
-    async createUser(userData: User) {
+    async createUser(userData) {
+      console.log(userData);
       const createdUser = await createUser(client, userData);
       return createdUser;
     },
@@ -42,24 +44,22 @@ export default function MyAdapter(client: postgres.Sql, options = {}) {
       return foundUser;
     },
 
-    async updateUser(user: User) {
+    async updateUser(user) {
       const updatedUser = await updateUserData(client, user);
       return updatedUser;
     },
 
-    async deleteUser(userId: string) {
+    async deleteUser(userId) {
       const deletedUserCount = await deleteUser(client, userId);
-      return deletedUserCount;
     },
 
-    async linkAccount(account: Account) {
+    async linkAccount(account) {
       const linkedAccount = await createAccount(client, account);
       return linkedAccount;
     },
 
     async unlinkAccount({ providerAccountId, provider }) {
       const deletedAccountCount = await unlinkAccount(client, providerAccountId);
-      return deletedAccountCount;
     },
 
     async createSession({ sessionToken, userId, expires }) {
@@ -79,17 +79,16 @@ export default function MyAdapter(client: postgres.Sql, options = {}) {
 
     async deleteSession(sessionToken) {
       const deletedSessionCount = await deleteSession(client, sessionToken);
-      return deletedSessionCount;
     },
 
     async createVerificationToken({ identifier, expires, token }) {
       const createdToken = await createVerificationToken(client, { identifier, expires, token });
-      return createdToken;
+      return createdToken as VerificationToken;
     },
 
     async useVerificationToken({ identifier, token }) {
       const foundToken = await UseVerificationToken(client, { identifier, token });
-      return foundToken;
+      return foundToken as VerificationToken;
     },
   };
 }

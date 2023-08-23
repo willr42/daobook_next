@@ -32,7 +32,7 @@ const createPatient = async (db: postgres.Sql, patient: Patient) => {
   return dbPatient;
 };
 
-const getUserCols = ["id", "role", "firstName", "lastName", "email", "emailVerified"];
+const getUserCols = ["users.id", "role", "firstName", "lastName", "email", "emailVerified"];
 
 const getUserById = async (db: postgres.Sql, userId: string) => {
   const [foundUser]: [User?] = await db`
@@ -64,8 +64,8 @@ const getUserByAccount = async (db: postgres.Sql, providerAccountId: string) => 
   const [foundUser]: [User?] = await db`
   SELECT ${db(getUserCols)}
   FROM users
-  JOIN accounts ON users.id = accounts.id
-  WHERE accounts.providerAccountId = ${providerAccountId}`;
+  JOIN accounts ON users.id = accounts.user_id
+  WHERE accounts.provider_account_id = ${providerAccountId}`;
 
   if (!foundUser) {
     throw new Error("User not found");
