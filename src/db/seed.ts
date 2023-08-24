@@ -6,13 +6,9 @@ import { createConsult } from "./consultQueries";
 import { Patient, PatientDatabase, User, Consult, UserToInsert } from "@/types";
 
 const seedUsers = async (sql: postgres.Sql) => {
-  const userHash = await argon2.hash("doctorPass");
-
   const doctorToInsert: UserToInsert = {
-    firstName: "doctorFirst",
-    lastName: "doctorLast",
+    name: "doctorFirst doctorLast",
     email: "testDoctor@example.com",
-    pass: userHash,
     role: "user",
     ahpra: "MED0001206214",
   };

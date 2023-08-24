@@ -11,6 +11,7 @@ export interface User extends AdapterUser {
 
 export interface UserToInsert extends Partial<User> {
   id?: string;
+  image?: string;
   emailVerified?: Date;
 }
 

@@ -25,12 +25,11 @@ CREATE TABLE public.patients (
 
 CREATE TABLE public.users (
     id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    pass text,
     role text,
-    first_name text,
-    last_name text,
+    name text,
     ahpra text,
     email text,
+    image text,
     email_verified timestamp without time zone DEFAULT NULL,
     updated_at timestamp without time zone DEFAULT now()
 );
