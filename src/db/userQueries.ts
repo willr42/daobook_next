@@ -2,14 +2,10 @@ import { Patient, User, UserToInsert } from "@/types";
 import postgres from "postgres";
 
 const createUser = async (db: postgres.Sql, doctor: UserToInsert) => {
-  if (!doctor.pass) {
-    throw new Error("No password provided");
-  }
-
   const [dbUser]: [User?] = await db`
       INSERT INTO
       users ${db(doctor)}
-      RETURNING id, first_name, last_name, email, email_verified, ahpra, role
+      RETURNING id, name, email, email_verified, ahpra, role, image
   `;
 
   if (!dbUser) {
@@ -32,7 +28,7 @@ const createPatient = async (db: postgres.Sql, patient: Patient) => {
   return dbPatient;
 };
 
-const getUserCols = ["users.id", "role", "firstName", "lastName", "email", "emailVerified"];
+const getUserCols = ["users.id", "role", "name", "image", "email", "emailVerified"];
 
 const getUserById = async (db: postgres.Sql, userId: string) => {
   const [foundUser]: [User?] = await db`
@@ -41,7 +37,7 @@ const getUserById = async (db: postgres.Sql, userId: string) => {
   WHERE id = ${userId}`;
 
   if (!foundUser) {
-    throw new Error("User not found");
+    return null;
   }
 
   return foundUser;
@@ -54,7 +50,7 @@ const getUserByEmail = async (db: postgres.Sql, email: string) => {
   WHERE email = ${email}`;
 
   if (!foundUser) {
-    throw new Error("User not found");
+    return null;
   }
 
   return foundUser;
@@ -68,7 +64,7 @@ const getUserByAccount = async (db: postgres.Sql, providerAccountId: string) => 
   WHERE accounts.provider_account_id = ${providerAccountId}`;
 
   if (!foundUser) {
-    throw new Error("User not found");
+    return null;
   }
 
   return foundUser;
