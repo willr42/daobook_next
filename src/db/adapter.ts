@@ -7,7 +7,6 @@ import {
   getUserById,
   updateUserData,
 } from "./userQueries";
-import { User, Account } from "@/types";
 import {
   createAccount,
   createSession,
@@ -24,7 +23,6 @@ import { VerificationToken } from "next-auth/adapters";
 export default function MyAdapter(client: postgres.Sql, options = {}) {
   return {
     async createUser(userData) {
-      console.log(userData);
       const createdUser = await createUser(client, userData);
       return createdUser;
     },
