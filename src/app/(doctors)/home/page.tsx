@@ -1,26 +1,25 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const userEmail = session?.user?.email;
 
+  if (status === "unauthenticated") {
+    redirect("/");
+  }
+
   if (status === "loading") {
     return <p>Hang on...</p>;
   }
 
-  if (status === "authenticated") {
-    return (
-      <>
-        <p>Signed in as {userEmail}</p>
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
-  }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center border-4 bg-primary p-24">
-      <button onClick={() => signIn("github")}>Sign in</button>
-    </main>
+    <>
+      <h1>Protected page</h1>
+      <p>Signed in as {userEmail}</p>
+      <button onClick={() => signOut()}>Sign out</button>
+    </>
   );
 }
