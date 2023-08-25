@@ -75,7 +75,7 @@ const updateUserData = async (db: postgres.Sql, user: User) => {
   UPDATE users
   SET ${db(user)}
   WHERE id = ${user.id}
-  RETURNING id, first_name, last_name, email, email_verified, ahpra, role`;
+  RETURNING id, name, email, email_verified, ahpra, role, image`;
 
   if (!updatedUser) {
     throw new Error("User not updated");
