@@ -4,7 +4,7 @@ import LogoutButton from "./LogoutButton";
 const DoctorHeader = () => {
   return (
     <header className="flex flex-col place-content-between items-center bg-primary p-6 md:flex-row">
-      <div className="inline-flex">
+      <div>
         <StyledLink linkText="Home" href="/home" />
         <LogoutButton />
       </div>
