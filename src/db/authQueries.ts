@@ -95,7 +95,7 @@ const UseVerificationToken = async (db: postgres.Sql, verificationTokenData) => 
   SELECT ${db(["identifier", "expires", "token"])}
   FROM verification_tokens
   WHERE identifier = ${verificationTokenData.identifier}
-  AND WHERE token = ${verificationTokenData.token}`;
+  AND token = ${verificationTokenData.token}`;
 
   return foundToken;
 };

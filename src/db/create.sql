@@ -57,7 +57,7 @@ CREATE TABLE public.sessions (
 );
 
 CREATE TABLE public.verification_tokens (
-    token uuid PRIMARY KEY,
+    token text PRIMARY KEY,
     identifier text,
     expires timestamp
 );
