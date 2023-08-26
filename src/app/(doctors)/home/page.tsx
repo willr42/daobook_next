@@ -1,25 +1,19 @@
-"use client";
-
-import { signOut, useSession } from "next-auth/react";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-export default function Dashboard() {
-  const { data: session, status } = useSession();
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
-  if (status === "unauthenticated") {
+  if (!session) {
     redirect("/");
-  }
-
-  if (status === "loading") {
-    return <p>Hang on...</p>;
   }
 
   return (
     <>
       <h1>Protected page</h1>
       <p>Signed in as {userEmail}</p>
-      <button onClick={() => signOut()}>Sign out</button>
     </>
   );
 }
