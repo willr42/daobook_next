@@ -16,6 +16,7 @@ CREATE TABLE public.consults (
 
 CREATE TABLE public.patients (
     patient_id uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
+    doctor_id uuid,
     first_name text,
     last_name text,
     email text,
@@ -64,6 +65,9 @@ CREATE TABLE public.verification_tokens (
 
 ALTER TABLE ONLY public.accounts
     ADD CONSTRAINT accounts_user_id FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY public.patients
+    ADD CONSTRAINT doctor_patient_id FOREIGN KEY (doctor_id) REFERENCES public.users(id) ON DELETE SET NULL;
 
 ALTER TABLE ONLY public.sessions
     ADD CONSTRAINT sessions_user_id FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
