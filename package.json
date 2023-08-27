@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:reset": "psql -U daoadmin -d daobook -f src/db/drop.sql && psql -U daoadmin -d daobook -f src/db/create.sql"
+    "db:reset": "psql -U daoadmin -d daobook -f src/db/drop.sql -h localhost && psql -U daoadmin -d daobook -f src/db/create.sql -h localhost"
   },
   "dependencies": {
     "argon2": "^0.31.0",
