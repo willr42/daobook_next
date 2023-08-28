@@ -5,6 +5,11 @@ import { getServerSession } from "next-auth";
 
 const getPatients = async () => {
   const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    return null;
+  }
+
   const res = await getAllPatients(sql, session?.user?.email);
   return res;
 };
