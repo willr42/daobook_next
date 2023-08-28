@@ -1,6 +1,7 @@
 "use client";
 
 import { startTransition } from "react";
+import Input from "@/components/Input";
 import { useForm } from "react-hook-form";
 import { action, type FormData } from "./newPatientAction";
 
@@ -19,7 +20,7 @@ export default function NewPatientForm() {
 
   return (
     <form onSubmit={onSubmit}>
-      <input defaultValue="test" {...register("firstName")} />
+      <Input label="First Name" register={register} defaultValue="Sue" required />
     </form>
   );
 }
