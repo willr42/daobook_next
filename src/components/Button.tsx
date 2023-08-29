@@ -6,6 +6,7 @@ type ButtonProps = {
   buttonTheme?: "primary" | "outline";
   buttonType: "submit" | "reset" | "button";
   onClick?: MouseEventHandler;
+  disabled: boolean;
 };
 
 const ButtonColor = {
@@ -16,9 +17,9 @@ const ButtonColor = {
 };
 
 const everyButton =
-  "border-4 rounded-2xl font-sans font-semibold shadow-md p-2 focus:ring transition active:scale-95";
+  "border-4 rounded-2xl font-sans font-semibold shadow-md p-2 focus:ring transition active:scale-95 disabled:border-slate-200 disabled:cursor-default disabled:pointer-events-none";
 
-const Button = ({ buttonText, buttonTheme, onClick, buttonType }: ButtonProps) => {
+const Button = ({ buttonText, buttonTheme, onClick, buttonType, disabled }: ButtonProps) => {
   if (!buttonTheme) {
     buttonTheme = "primary";
   }
@@ -26,7 +27,7 @@ const Button = ({ buttonText, buttonTheme, onClick, buttonType }: ButtonProps) =
   const finalStyles = classNames([everyButton, ButtonColor[buttonTheme]]);
 
   return (
-    <button className={finalStyles} onClick={onClick} type={buttonType}>
+    <button className={finalStyles} onClick={onClick} type={buttonType} disabled={disabled}>
       {buttonText}
     </button>
   );
