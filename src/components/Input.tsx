@@ -3,7 +3,7 @@ type InputProp = {
   fieldName: string;
   register: Function;
   required: boolean;
-  defaultValue: string;
+  defaultValue?: string;
 };
 
 export default function Input({ label, fieldName, register, required, defaultValue }: InputProp) {
