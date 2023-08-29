@@ -1,15 +1,23 @@
 type InputProp = {
   label: string;
+  fieldName: string;
   register: Function;
   required: boolean;
   defaultValue: string;
 };
 
-export default function Input({ label, register, required, defaultValue }: InputProp) {
+export default function Input({ label, fieldName, register, required, defaultValue }: InputProp) {
   return (
-    <>
-      <label>{label}</label>
-      <input {...(register(label), { required })} defaultValue={defaultValue} />
-    </>
+    <div className="flex flex-col">
+      <label className="text-xl" htmlFor={fieldName}>
+        {label}
+      </label>
+      <input
+        id={fieldName}
+        {...register(fieldName, { required: required })}
+        defaultValue={defaultValue}
+        className="w-full rounded-2xl border-2 border-[#DFDFDF] p-2 px-4 placeholder:text-[#DFDFDF]"
+      />
+    </div>
   );
 }
