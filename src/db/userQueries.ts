@@ -1,4 +1,4 @@
-import { Patient, User, UserToInsert } from "@/types";
+import { User, UserToInsert } from "@/types";
 import postgres from "postgres";
 
 const createUser = async (db: postgres.Sql, doctor: UserToInsert) => {
@@ -13,19 +13,6 @@ const createUser = async (db: postgres.Sql, doctor: UserToInsert) => {
   }
 
   return dbUser;
-};
-
-const createPatient = async (db: postgres.Sql, patient: Patient) => {
-  const [dbPatient]: [Patient?] = await db`
-      INSERT INTO
-      patients ${db(patient)}
-      RETURNING patient_id, first_name, last_name, email, dob
-  `;
-
-  if (!dbPatient) {
-    throw new Error("Something went wrong in creation");
-  }
-  return dbPatient;
 };
 
 const getUserCols = ["users.id", "role", "name", "image", "email", "emailVerified"];
@@ -91,12 +78,4 @@ const deleteUser = async (db: postgres.Sql, userId: string) => {
   return deletedUser.count;
 };
 
-export {
-  createUser,
-  createPatient,
-  getUserByEmail,
-  getUserById,
-  getUserByAccount,
-  updateUserData,
-  deleteUser,
-};
+export { createUser, getUserByEmail, getUserById, getUserByAccount, updateUserData, deleteUser };

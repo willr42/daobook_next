@@ -1,4 +1,4 @@
-import { Patient } from "@/types";
+import { Patient, PatientDatabase } from "@/types";
 import postgres from "postgres";
 
 const LimitedPatientInfoCol = ["patient_id", "first_name", "last_name"];
@@ -7,7 +7,6 @@ const getAllPatients = async (db: postgres.Sql, userEmail: string) => {
   if (!userEmail) {
     return null;
   }
-  console.log("User email: ", userEmail);
   const foundPatients: Patient[] = await db`
   SELECT ${db(LimitedPatientInfoCol)}
   FROM patients
@@ -22,4 +21,16 @@ const getAllPatients = async (db: postgres.Sql, userEmail: string) => {
   return foundPatients;
 };
 
-export { getAllPatients };
+const createNewPatient = async (db: postgres.Sql, patient: Patient) => {
+  const [dbPatient]: [PatientDatabase?] = await db`
+      INSERT INTO
+      patients ${db(patient)}
+      RETURNING patient_id, first_name, last_name, email, dob
+  `;
+
+  if (!dbPatient) {
+    throw new Error("Something went wrong in creation");
+  }
+  return dbPatient;
+};
+export { getAllPatients, createNewPatient };
