@@ -23,6 +23,18 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   adapter: MyAdapter(sql),
+  callbacks: {
+    session: ({ session, user }) => {
+      const sessionWithId = {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+        },
+      };
+      return sessionWithId;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
