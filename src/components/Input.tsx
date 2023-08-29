@@ -16,6 +16,7 @@ export default function Input({ label, fieldName, register, required, defaultVal
         id={fieldName}
         {...register(fieldName, { required: required })}
         defaultValue={defaultValue}
+        placeholder={label}
         className="w-full rounded-2xl border-2 border-[#DFDFDF] p-2 px-4 placeholder:text-[#DFDFDF]"
       />
     </div>
