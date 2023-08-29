@@ -4,7 +4,8 @@ import { MouseEventHandler } from "react";
 type ButtonProps = {
   buttonText: string;
   buttonTheme?: "primary" | "outline";
-  onClick: MouseEventHandler;
+  buttonType: "submit" | "reset" | "button";
+  onClick?: MouseEventHandler;
 };
 
 const ButtonColor = {
@@ -17,7 +18,7 @@ const ButtonColor = {
 const everyButton =
   "border-4 rounded-2xl font-sans font-semibold shadow-md p-2 focus:ring transition active:scale-95";
 
-const Button = ({ buttonText, buttonTheme, onClick }: ButtonProps) => {
+const Button = ({ buttonText, buttonTheme, onClick, buttonType }: ButtonProps) => {
   if (!buttonTheme) {
     buttonTheme = "primary";
   }
@@ -25,7 +26,7 @@ const Button = ({ buttonText, buttonTheme, onClick }: ButtonProps) => {
   const finalStyles = classNames([everyButton, ButtonColor[buttonTheme]]);
 
   return (
-    <button className={finalStyles} onClick={onClick}>
+    <button className={finalStyles} onClick={onClick} type={buttonType}>
       {buttonText}
     </button>
   );
