@@ -1,4 +1,4 @@
-import { Patient, PatientDatabase } from "@/types";
+import { Patient, DatabasePatient } from "@/types";
 import postgres from "postgres";
 
 const LimitedPatientInfoCol = ["patient_id", "first_name", "last_name"];
@@ -7,7 +7,8 @@ const getAllPatients = async (db: postgres.Sql, userEmail: string) => {
   if (!userEmail) {
     return null;
   }
-  const foundPatients: Patient[] = await db`
+
+  const foundPatients: DatabasePatient[] = await db`
   SELECT ${db(LimitedPatientInfoCol)}
   FROM patients
   JOIN users
@@ -21,8 +22,27 @@ const getAllPatients = async (db: postgres.Sql, userEmail: string) => {
   return foundPatients;
 };
 
+const PatientInfoCols = ["patient_id", "first_name", "last_name", "email", "dob"];
+
+const getPatient = async (db: postgres.Sql, patientId: string) => {
+  if (!patientId) {
+    return null;
+  }
+
+  const [foundPatient]: [DatabasePatient?] = await db`
+  SELECT ${db(PatientInfoCols)}
+  FROM patients
+  WHERE patient_id = ${patientId}`;
+
+  if (!foundPatient) {
+    return null;
+  }
+
+  return foundPatient;
+};
+
 const createNewPatient = async (db: postgres.Sql, patient: Patient) => {
-  const [dbPatient]: [PatientDatabase?] = await db`
+  const [dbPatient]: [DatabasePatient?] = await db`
       INSERT INTO
       patients ${db(patient)}
       RETURNING patient_id, first_name, last_name, email, dob
@@ -33,4 +53,5 @@ const createNewPatient = async (db: postgres.Sql, patient: Patient) => {
   }
   return dbPatient;
 };
-export { getAllPatients, createNewPatient };
+
+export { getAllPatients, getPatient, createNewPatient };

@@ -22,7 +22,7 @@ export interface Patient {
   dob: Date;
 }
 
-export interface PatientDatabase extends Patient {
+export interface DatabasePatient extends Patient {
   patientId: string;
 }
 

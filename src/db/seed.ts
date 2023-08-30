@@ -3,7 +3,7 @@ import postgres from "postgres";
 import * as argon2 from "argon2";
 import { createUser, createPatient, updateUserData } from "./userQueries";
 import { createConsult } from "./consultQueries";
-import { Patient, PatientDatabase, User, Consult, UserToInsert } from "@/types";
+import { Patient, DatabasePatient, User, Consult, UserToInsert } from "@/types";
 
 const seedUsers = async (sql: postgres.Sql) => {
   const doctorToInsert: UserToInsert = {
@@ -34,7 +34,7 @@ const seedUsers = async (sql: postgres.Sql) => {
 
 type usersObj = {
   doctorUser: User;
-  patient: PatientDatabase;
+  patient: DatabasePatient;
 };
 
 const seedConsults = async (sql: postgres.Sql, usersObj: usersObj) => {
