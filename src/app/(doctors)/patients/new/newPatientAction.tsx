@@ -20,6 +20,14 @@ export async function action(data: FormData) {
   const sessionData = await getServerSession(authOptions);
   const finalData = data;
   finalData.doctorId = sessionData?.user.id;
-  const newPatient = await createNewPatient(sql, data);
-  return newPatient;
+  try {
+    const newPatient = await createNewPatient(sql, data);
+    return { data: newPatient, error: null };
+  } catch (e) {
+    if (typeof e === "string") {
+      return { error: e, data: null };
+    } else if (e instanceof Error) {
+      return { error: e.message, data: null };
+    }
+  }
 }

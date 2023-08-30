@@ -1,8 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import StyledLink from "@/components/StyledLink";
 import sql from "@/db/db";
 import { getAllPatients } from "@/db/patientQueries";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 
 const getPatients = async () => {
   const session = await getServerSession(authOptions);
@@ -18,12 +18,15 @@ const getPatients = async () => {
 export default async function PatientList() {
   const patientData = await getPatients();
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-2xl font-bold">Your clinic patients.</h1>
       {patientData?.length > 0
         ? patientData.map((patient) => (
-            <Link key={patient.email} href={`/patients/${patient.patientId}`}>
-              {patient.firstName}
-            </Link>
+            <StyledLink
+              key={patient.email}
+              href={`/patients/${patient.patientId}`}
+              linkText={`${patient.firstName} ${patient.lastName}`}
+            ></StyledLink>
           ))
         : null}
     </div>

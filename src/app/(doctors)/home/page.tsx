@@ -20,7 +20,7 @@ export default async function Dashboard() {
           className="flex flex-col justify-center p-5"
         />
         <StyledLink
-          href="/patients/list"
+          href="/patients"
           linkText="Patient List"
           className="flex flex-col justify-center p-5"
         />

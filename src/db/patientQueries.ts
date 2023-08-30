@@ -42,6 +42,15 @@ const getPatient = async (db: postgres.Sql, patientId: string) => {
 };
 
 const createNewPatient = async (db: postgres.Sql, patient: Patient) => {
+  const [existingPatient] = await db`
+  SELECT ${db(PatientInfoCols)}
+  FROM patients
+  WHERE email = ${patient.email}`;
+
+  if (existingPatient) {
+    throw new Error("Patient with that email already exists");
+  }
+
   const [dbPatient]: [DatabasePatient?] = await db`
       INSERT INTO
       patients ${db(patient)}

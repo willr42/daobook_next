@@ -1,3 +1,4 @@
+import { Consult } from "@/types";
 import postgres from "postgres";
 
 const createConsult = async (db: postgres.Sql, consult: Consult) => {

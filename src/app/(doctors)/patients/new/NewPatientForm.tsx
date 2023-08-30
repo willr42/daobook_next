@@ -20,6 +20,8 @@ export default function NewPatientForm() {
   const onSubmit = handleSubmit((data) => {
     startTransition(async () => {
       const newPatient = await action(data);
+      console.log(newPatient);
+      // TODO handle on frontend error
       setNewPatientId(newPatient.patientId);
     });
   });
