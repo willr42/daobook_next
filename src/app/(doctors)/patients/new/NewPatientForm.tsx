@@ -13,16 +13,24 @@ export default function NewPatientForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitted },
-  } = useForm<FormData>();
+    setError,
+    clearErrors,
+    reset,
+  } = useForm<FormData>({ reValidateMode: "onChange" });
 
   const [newPatientId, setNewPatientId] = useState("");
 
   const onSubmit = handleSubmit((data) => {
     startTransition(async () => {
       const newPatient = await action(data);
-      console.log(newPatient);
-      // TODO handle on frontend error
-      setNewPatientId(newPatient.patientId);
+
+      if (newPatient.error) {
+        setError("root.serverError", {
+          message: newPatient?.error,
+        });
+      } else {
+        setNewPatientId(newPatient.data.patientId);
+      }
     });
   });
 
@@ -56,11 +64,23 @@ export default function NewPatientForm() {
         defaultValue={new Date(1985, 9, 26)}
         required={true}
       />
+      {errors?.root?.serverError.message && <p>{errors?.root.serverError.message}</p>}
       {!isSubmitted ? (
         <Button
           buttonType="submit"
           buttonText={isSubmitting ? "Sending..." : "Submit"}
           disabled={isSubmitting}
+        />
+      ) : errors.root ? (
+        <Button
+          buttonType="reset"
+          buttonText="Reset?"
+          disabled={false}
+          onClick={(e) => {
+            e.preventDefault();
+            reset({}, { keepValues: true });
+            console.log(errors.root);
+          }}
         />
       ) : newPatientId ? (
         <StyledLink href={`/patients/${newPatientId}/new`} linkText="New consult" />
