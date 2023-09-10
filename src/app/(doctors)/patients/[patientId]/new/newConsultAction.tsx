@@ -1,13 +1,14 @@
 "use server";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { createConsult } from "@/db/consultQueries";
 import sql from "@/db/db";
 import { getServerSession } from "next-auth";
 
 export type FormData = {
   patientId: string;
   id: string;
-  consultTime: string;
+  consultTime: Date;
   mainComplaint: string;
   tongue: string;
   pulse: string;
@@ -21,11 +22,9 @@ export async function action(data: FormData) {
   const sessionData = await getServerSession(authOptions);
   const finalData = data;
   finalData.id = sessionData?.user?.id;
-  console.log(finalData);
+
   try {
-    // TODO: new consult
-    // const newConsult = await createNewConsult(sql, data);
-    let newConsult;
+    const newConsult = await createConsult(sql, data);
     return { data: newConsult, error: null };
   } catch (e) {
     if (typeof e === "string") {

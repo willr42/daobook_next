@@ -12,7 +12,7 @@ import { usePathname } from "next/navigation";
 const NewConsult = () => {
   // This seems unidiomatic but not sure of a better way
   const pathName = usePathname();
-  const patientId = pathName.split("/")[2];
+  const routePatientId = pathName.split("/")[2];
 
   const {
     register,
@@ -23,6 +23,10 @@ const NewConsult = () => {
   } = useForm<FormData>({ reValidateMode: "onChange" });
 
   const onSubmit = handleSubmit((data) => {
+    // Add missing fields
+    data.patientId = routePatientId;
+    data.consultTime = new Date(data.consultTime);
+
     startTransition(async () => {
       const newConsult = await action(data);
 
