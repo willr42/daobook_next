@@ -36,27 +36,9 @@ export default function NewPatientForm() {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6">
-      <Input
-        label="First Name"
-        fieldName="firstName"
-        register={register}
-        defaultValue="Sue"
-        required={true}
-      />
-      <Input
-        label="Last Name"
-        fieldName="lastName"
-        register={register}
-        defaultValue="Richards"
-        required={true}
-      />
-      <Input
-        label="Email"
-        fieldName="email"
-        register={register}
-        defaultValue="sue@example.com"
-        required={true}
-      />
+      <Input label="First Name" fieldName="firstName" register={register} required={true} />
+      <Input label="Last Name" fieldName="lastName" register={register} required={true} />
+      <Input label="Email" fieldName="email" register={register} required={true} />
       <DateInput
         label="Date of Birth"
         fieldName="dob"
