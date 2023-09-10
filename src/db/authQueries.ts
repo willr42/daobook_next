@@ -37,7 +37,7 @@ const createSession = async (db: postgres.Sql, sessionData: Session) => {
 };
 
 const getSessionAndUser = async (db: postgres.Sql, sessionToken: string) => {
-  const sessionCols = ["id", "expires", "sessionToken", "userId"];
+  const sessionCols = ["expires", "sessionToken", "userId"];
   const [foundSession]: [Session?] = await db`
   SELECT ${db(sessionCols)}
   FROM sessions
@@ -63,7 +63,7 @@ const updateSession = async (db: postgres.Sql, sessionData: AdapterSession) => {
   const [updatedSession]: [AdapterSession] = await db`
   UPDATE sessions
   SET ${db(sessionData)}
-  WHERE id = ${sessionData.userId}
+  WHERE session_token = ${sessionData}
   RETURNING *`;
 
   return updatedSession;
