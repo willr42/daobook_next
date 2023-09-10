@@ -20,7 +20,7 @@ export default async function PatientList() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Your clinic patients.</h1>
-      {patientData?.length > 0
+      {patientData && patientData?.length > 0
         ? patientData.map((patient) => (
             <StyledLink
               key={patient.email}
