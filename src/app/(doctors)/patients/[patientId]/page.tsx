@@ -1,17 +1,24 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import sql from "@/db/db";
 import { getPatient } from "@/db/patientQueries";
+import { getConsults } from "@/db/consultQueries";
+import StyledLink from "@/components/StyledLink";
 
 const getPatientData = async (patientId) => {
   const res = await getPatient(sql, patientId);
   return res;
 };
 
+const getConsultData = async (patientId) => {
+  const res = await getConsults(sql, patientId);
+  return res;
+};
+
 export default async function PatientPage({ params }: { params: { patientId: string } }) {
   const patientData = await getPatientData(params.patientId);
+  const consultData = await getConsultData(params.patientId);
   return (
     <div className="flex flex-col gap-4">
+      <h1 className="text-xl">Patient Info</h1>
       <div>
         <p className="font-bold">First Name</p>
         <p>{patientData?.firstName}</p>
@@ -27,6 +34,18 @@ export default async function PatientPage({ params }: { params: { patientId: str
       <div>
         <p className="font-bold">Date of birth</p>
         <p>{patientData?.dob.toLocaleDateString()}</p>
+      </div>
+      <div>
+        <h2 className="text-xl">Consults</h2>
+        {consultData && consultData.length > 0
+          ? consultData.map((consult) => (
+              <StyledLink
+                linkText={consult.consultTime.toLocaleDateString()}
+                href={`${params.patientId}/${consult.consultId}`}
+                key={consult.consultId}
+              />
+            ))
+          : null}
       </div>
     </div>
   );
