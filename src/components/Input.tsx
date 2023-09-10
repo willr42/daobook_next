@@ -17,7 +17,7 @@ export default function Input({
 }: InputProp) {
   return (
     <div className="flex flex-col">
-      <label className="text-xl" htmlFor={fieldName}>
+      <label className="text-md" htmlFor={fieldName}>
         {label}
       </label>
       <input
