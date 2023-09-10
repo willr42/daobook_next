@@ -6,6 +6,7 @@ CREATE TABLE public.consults (
     id uuid,
     consult_time timestamp without time zone,
     main_complaint text,
+    session_notes text,
     tongue text,
     pulse text,
     prescription_name text,
