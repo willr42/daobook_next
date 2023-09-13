@@ -27,6 +27,7 @@ export interface DatabasePatient extends Patient {
 }
 
 export type Consult = {
+  consultId: string;
   patientId: string;
   id: string;
   consultTime?: Date;

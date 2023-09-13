@@ -41,7 +41,7 @@ export default async function PatientPage({ params }: { params: { patientId: str
           ? consultData.map((consult) => (
               <StyledLink
                 linkText={consult.consultTime?.toLocaleDateString()}
-                href={`${params.patientId}/${consult.id}`}
+                href={`${params.patientId}/${consult.consultId}`}
                 key={consult.id}
               />
             ))
