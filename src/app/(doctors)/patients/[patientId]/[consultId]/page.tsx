@@ -1,3 +1,4 @@
+import StyledLink from "@/components/StyledLink";
 import { getConsult } from "@/db/consultQueries";
 import sql from "@/db/db";
 import { Consult } from "@/types";
@@ -46,6 +47,7 @@ async function ConsultPage({ params }: { params: { patientId: string; consultId:
         Consult
       </h1>
       <ConsultDataDisplay data={consultData} />
+      <StyledLink href="." linkText="Back" />
     </div>
   );
 }

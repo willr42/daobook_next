@@ -20,15 +20,18 @@ export default async function PatientList() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Your clinic patients.</h1>
-      {patientData && patientData?.length > 0
-        ? patientData.map((patient) => (
-            <StyledLink
-              key={patient.email}
-              href={`/patients/${patient.patientId}`}
-              linkText={`${patient.firstName} ${patient.lastName}`}
-            ></StyledLink>
-          ))
-        : null}
+      <div className="min-w-full">
+        {patientData && patientData?.length > 0
+          ? patientData.map((patient) => (
+              <StyledLink
+                key={patient.email}
+                href={`/patients/${patient.patientId}`}
+                linkText={`${patient.firstName} ${patient.lastName}`}
+                className="min-w-full"
+              ></StyledLink>
+            ))
+          : null}
+      </div>
     </div>
   );
 }
