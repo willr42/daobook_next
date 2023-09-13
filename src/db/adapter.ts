@@ -65,13 +65,13 @@ export default function MyAdapter(client: postgres.Sql, options = {}) {
       return createdSession;
     },
 
-    async getSessionAndUser(sessionToken) {
+    async getSessionAndUser(sessionToken: string) {
       const sessionAndUser = await getSessionAndUser(client, sessionToken);
       return sessionAndUser;
     },
 
-    async updateSession({ sessionToken }) {
-      const updatedSession = await updateSession(client, sessionToken);
+    async updateSession(sessionData) {
+      const updatedSession = await updateSession(client, sessionData);
       return updatedSession;
     },
 

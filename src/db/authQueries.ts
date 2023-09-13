@@ -59,11 +59,14 @@ const getSessionAndUser = async (db: postgres.Sql, sessionToken: string) => {
   };
 };
 
-const updateSession = async (db: postgres.Sql, sessionData: AdapterSession) => {
-  const [updatedSession]: [AdapterSession] = await db`
+const updateSession = async (
+  db: postgres.Sql,
+  sessionData: { sessionToken: string; expires: Date }
+) => {
+  const [updatedSession] = await db`
   UPDATE sessions
   SET ${db(sessionData)}
-  WHERE session_token = ${sessionData}
+  WHERE session_token = ${sessionData.sessionToken}
   RETURNING *`;
 
   return updatedSession;
