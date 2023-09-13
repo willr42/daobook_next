@@ -2,7 +2,7 @@ import Link from "next/link";
 import classNames from "classnames";
 
 type StyledLinkProps = {
-  linkText: string;
+  linkText: string | undefined;
   href: string;
   replace?: boolean;
   scroll?: boolean;

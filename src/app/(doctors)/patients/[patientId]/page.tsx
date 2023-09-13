@@ -3,12 +3,12 @@ import { getPatient } from "@/db/patientQueries";
 import { getConsults } from "@/db/consultQueries";
 import StyledLink from "@/components/StyledLink";
 
-const getPatientData = async (patientId) => {
+const getPatientData = async (patientId: string) => {
   const res = await getPatient(sql, patientId);
   return res;
 };
 
-const getConsultData = async (patientId) => {
+const getConsultData = async (patientId: string) => {
   const res = await getConsults(sql, patientId);
   return res;
 };
@@ -40,9 +40,9 @@ export default async function PatientPage({ params }: { params: { patientId: str
         {consultData && consultData.length > 0
           ? consultData.map((consult) => (
               <StyledLink
-                linkText={consult.consultTime.toLocaleDateString()}
-                href={`${params.patientId}/${consult.consultId}`}
-                key={consult.consultId}
+                linkText={consult.consultTime?.toLocaleDateString()}
+                href={`${params.patientId}/${consult.id}`}
+                key={consult.id}
               />
             ))
           : null}
