@@ -20,7 +20,6 @@ const ConsultForm = ({ onSubmit, existingData }: ConsultFormProps) => {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6">
-      <h1 className="text-xl">New Consult</h1>
       <DateInput
         label="Consult Date"
         fieldName="consultTime"
