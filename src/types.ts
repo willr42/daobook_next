@@ -32,6 +32,7 @@ export type Consult = {
   id: string;
   consultTime?: Date;
   mainComplaint: string;
+  sessionNotes: string;
   tongue: string;
   pulse: string;
   prescriptionName: string;
