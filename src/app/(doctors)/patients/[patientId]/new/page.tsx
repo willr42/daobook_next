@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { action, type FormData } from "./newConsultAction";
 
 const NewConsult = ({ params }: { params: { patientId: string } }) => {
-  const { handleSubmit, setError } = useForm<FormData>({
+  const { handleSubmit, register, reset, formState, setError } = useForm<FormData>({
     reValidateMode: "onChange",
   });
 
@@ -26,7 +26,9 @@ const NewConsult = ({ params }: { params: { patientId: string } }) => {
     });
   });
 
-  return <ConsultForm onSubmit={onSubmit} />;
+  return (
+    <ConsultForm onSubmit={onSubmit} register={register} formState={formState} reset={reset} />
+  );
 };
 
 export default NewConsult;

@@ -48,6 +48,7 @@ async function ConsultPage({ params }: { params: { patientId: string; consultId:
       </h1>
       <ConsultDataDisplay data={consultData} />
       <StyledLink href="." linkText="Back" />
+      <StyledLink href={`${params.consultId}/edit`} linkText="Edit" />
     </div>
   );
 }

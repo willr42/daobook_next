@@ -1,23 +1,20 @@
 import Button from "@/components/Button";
 import StyledLink from "@/components/StyledLink";
 import { FormEventHandler } from "react";
-import { useForm } from "react-hook-form";
+import { FormState, UseFormRegister, UseFormReset, useForm } from "react-hook-form";
 import DateInput from "./DateInput";
 import Input from "./Input";
-import { FormData } from "@/app/(doctors)/patients/[patientId]/new/newConsultAction";
+import { FormData } from "@/app/(doctors)/patients/[patientId]/[consultId]/edit/editConsultAction";
 
 type ConsultFormProps = {
   onSubmit: FormEventHandler;
   existingData?: FormData;
+  register: UseFormRegister<FormData>;
+  reset: UseFormReset<FormData>;
+  formState: FormState<FormData>;
 };
 
-const ConsultForm = ({ onSubmit, existingData }: ConsultFormProps) => {
-  const {
-    register,
-    formState: { errors, isSubmitting, isSubmitted },
-    reset,
-  } = useForm<FormData>({ reValidateMode: "onChange" });
-
+const ConsultForm = ({ onSubmit, existingData, register, formState, reset }: ConsultFormProps) => {
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6">
       <DateInput
@@ -86,15 +83,17 @@ const ConsultForm = ({ onSubmit, existingData }: ConsultFormProps) => {
         defaultValue={existingData?.prescriptionNotes ?? ""}
       />
 
-      {errors?.root?.serverError.message && <p>{errors?.root.serverError.message}</p>}
+      {formState.errors?.root?.serverError.message && (
+        <p>{formState.errors?.root.serverError.message}</p>
+      )}
 
-      {!isSubmitted ? (
+      {!formState.isSubmitted ? (
         <Button
           buttonType="submit"
-          buttonText={isSubmitting ? "Sending..." : "Submit"}
-          disabled={isSubmitting}
+          buttonText={formState.isSubmitting ? "Sending..." : "Submit"}
+          disabled={formState.isSubmitting}
         />
-      ) : errors.root ? (
+      ) : formState.errors.root ? (
         <Button
           buttonType="reset"
           buttonText="Reset?"
@@ -102,7 +101,7 @@ const ConsultForm = ({ onSubmit, existingData }: ConsultFormProps) => {
           onClick={(e) => {
             e.preventDefault();
             reset({}, { keepValues: true });
-            console.log(errors.root);
+            console.log(formState.errors.root);
           }}
         />
       ) : (
@@ -111,7 +110,9 @@ const ConsultForm = ({ onSubmit, existingData }: ConsultFormProps) => {
       <StyledLink
         href="/home"
         linkText="Back"
-        className={isSubmitted ? "opacity-100 transition-opacity duration-500" : "opacity-0"}
+        className={
+          formState.isSubmitted ? "opacity-100 transition-opacity duration-500" : "opacity-0"
+        }
       />
     </form>
   );
