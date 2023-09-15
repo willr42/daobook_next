@@ -4,6 +4,17 @@ import EmailProvider from "next-auth/providers/email";
 import MyAdapter from "@/db/adapter";
 import sql from "@/db/db";
 
+import { Session } from "next-auth";
+
+export interface SessionWithId extends Session {
+  user?: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    id: string | null;
+  };
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
@@ -25,7 +36,7 @@ export const authOptions: NextAuthOptions = {
   adapter: MyAdapter(sql),
   callbacks: {
     session: ({ session, user }) => {
-      const sessionWithId = {
+      const sessionWithId: SessionWithId = {
         ...session,
         user: {
           ...session.user,
