@@ -55,4 +55,19 @@ const getConsult = async (db: postgres.Sql, patientId: string, consultId: string
   return foundConsult;
 };
 
-export { createConsult, getConsults, getConsult };
+const updateConsult = async (db: postgres.Sql, newConsultData: Consult) => {
+  if (!newConsultData) {
+    return null;
+  }
+
+  const [updatedConsult]: [Consult] = await db`
+  UPDATE consults
+  SET ${db(newConsultData)}
+  WHERE patient_id = ${newConsultData.patientId}
+  AND consult_id = ${newConsultData.consultId}
+  RETURNING *`;
+
+  return updatedConsult;
+};
+
+export { createConsult, getConsults, getConsult, updateConsult };
