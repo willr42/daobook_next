@@ -37,16 +37,19 @@ export default async function PatientPage({ params }: { params: { patientId: str
       </div>
       <div>
         <h2 className="text-xl">Consults</h2>
-        {consultData && consultData.length > 0
-          ? consultData.map((consult) => (
-              <StyledLink
-                linkText={consult.consultTime?.toLocaleDateString()}
-                href={`${params.patientId}/${consult.consultId}`}
-                key={consult.id}
-              />
-            ))
-          : null}
+        <div className="flex flex-col gap-4">
+          {consultData && consultData.length > 0
+            ? consultData.map((consult) => (
+                <StyledLink
+                  linkText={consult.consultTime?.toLocaleDateString()}
+                  href={`${params.patientId}/${consult.consultId}`}
+                  key={consult.id}
+                />
+              ))
+            : null}
+        </div>
       </div>
+      <StyledLink linkText="New Consult" href={`${params.patientId}/new`} />
     </div>
   );
 }

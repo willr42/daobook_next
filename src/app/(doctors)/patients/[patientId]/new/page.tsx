@@ -80,7 +80,6 @@ const NewConsult = () => {
 
       {errors?.root?.serverError.message && <p>{errors?.root.serverError.message}</p>}
 
-      {/* refactor this */}
       {!isSubmitted ? (
         <Button
           buttonType="submit"
