@@ -29,7 +29,7 @@ const getConsults = async (db: postgres.Sql, patientId: string) => {
   return foundConsults;
 };
 
-const getConsult = async (db: postgres.Sql, patientId: string, consultId: number) => {
+const getConsult = async (db: postgres.Sql, patientId: string, consultId: string) => {
   if (!consultId) {
     return null;
   }
