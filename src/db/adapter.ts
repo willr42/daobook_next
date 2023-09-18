@@ -20,7 +20,10 @@ import {
 import { VerificationToken } from "next-auth/adapters";
 
 /** @return { import("next-auth/adapters").Adapter } */
-export default function MyAdapter(client: postgres.Sql, options = {}) {
+export default function MyAdapter(
+  client: postgres.Sql,
+  options = {}
+): import("next-auth/adapters").Adapter {
   return {
     async createUser(userData) {
       const createdUser = await createUser(client, userData);

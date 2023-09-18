@@ -1,4 +1,5 @@
 import { AdapterAccount, AdapterSession, AdapterUser } from "next-auth/adapters";
+import {} from "react/experimental";
 
 export interface User extends AdapterUser {
   firstName: string;
@@ -29,7 +30,7 @@ export interface DatabasePatient extends Patient {
 export type Consult = {
   consultId: string;
   patientId: string;
-  id: string;
+  id: string | null | undefined;
   consultTime?: Date;
   mainComplaint: string;
   sessionNotes: string;

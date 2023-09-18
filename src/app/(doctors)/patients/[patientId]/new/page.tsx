@@ -3,16 +3,20 @@
 import ConsultForm from "@/components/ConsultForm";
 import { startTransition } from "react";
 import { useForm } from "react-hook-form";
-import { action, type FormData } from "./newConsultAction";
+import { action } from "./newConsultAction";
+import { Consult } from "@/types";
 
 const NewConsult = ({ params }: { params: { patientId: string } }) => {
-  const { handleSubmit, register, reset, formState, setError } = useForm<FormData>({
+  const { handleSubmit, register, reset, formState, setError } = useForm<Consult>({
     reValidateMode: "onChange",
   });
 
   const onSubmit = handleSubmit((data) => {
     // Add missing fields
     data.patientId = params.patientId;
+    if (!data.consultTime) {
+      data.consultTime = new Date();
+    }
     data.consultTime = new Date(data.consultTime);
 
     startTransition(async () => {
@@ -23,6 +27,7 @@ const NewConsult = ({ params }: { params: { patientId: string } }) => {
           message: newConsult?.error,
         });
       }
+      return undefined;
     });
   });
 

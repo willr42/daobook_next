@@ -1,14 +1,14 @@
 import Button from "@/components/Button";
 import StyledLink from "@/components/StyledLink";
 import { FormEventHandler } from "react";
-import { FormState, UseFormRegister, UseFormReset, useForm } from "react-hook-form";
+import { FormState, UseFormRegister, UseFormReset } from "react-hook-form";
 import DateInput from "./DateInput";
 import Input from "./Input";
-import { FormData } from "@/app/(doctors)/patients/[patientId]/[consultId]/edit/editConsultAction";
+import { Consult } from "@/types";
 
 type ConsultFormProps = {
   onSubmit: FormEventHandler;
-  existingData?: FormData;
+  existingData?: Consult;
   register: UseFormRegister<FormData>;
   reset: UseFormReset<FormData>;
   formState: FormState<FormData>;

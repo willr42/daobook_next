@@ -3,23 +3,10 @@
 import { SessionWithId, authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { createConsult } from "@/db/consultQueries";
 import sql from "@/db/db";
+import { Consult } from "@/types";
 import { getServerSession } from "next-auth";
 
-export type FormData = {
-  patientId: string;
-  id: string;
-  consultTime: Date;
-  mainComplaint: string;
-  sessionNotes: string;
-  tongue: string;
-  pulse: string;
-  prescriptionName: string;
-  prescriptionComposition: string;
-  prescriptionDosage: string;
-  prescriptionNotes: string;
-};
-
-export async function action(data: FormData) {
+export async function action(data: Consult) {
   const sessionData = (await getServerSession(authOptions)) as SessionWithId;
   const finalData = data;
   finalData.id = sessionData?.user?.id;
