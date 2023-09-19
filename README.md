@@ -6,10 +6,10 @@ See it live here: [Daobook Next](https://daobook-next.vercel.app).
 
 ## Dependencies
 
-[NextJS 13](https://nextjs.org/) with the experimental App Router & Server Actions. Cutting-edge tech that cut me a few times.
-🧮 [Postgres.js](https://github.com/porsager/postgres) and its querybuilder for all DB interaction.
-🧭 [Auth.js](https://authjs.dev), where I wrote my own custom Adapter to work with the Postgres.js library above.
-🎨 [TailwindCSS](https://tailwindcss.com/) for all styling.
+- [NextJS 13](https://nextjs.org/) with the experimental App Router & Server Actions. Cutting-edge tech that cut me a few times.
+- 🧮 [Postgres.js](https://github.com/porsager/postgres) and its querybuilder for all DB interaction.
+- 🧭 [Auth.js](https://authjs.dev), where I wrote my own custom Adapter to work with the Postgres.js library above.
+- 🎨 [TailwindCSS](https://tailwindcss.com/) for all styling.
 
 ## Running locally
 
