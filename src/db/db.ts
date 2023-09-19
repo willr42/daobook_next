@@ -5,7 +5,9 @@ const portNumber = parseInt(process.env.POSTGRES_PORT as string);
 const options: postgres.Options<{}> = {
   transform: postgres.camel,
   host: process.env.POSTGRES_HOST,
-  ssl: "require",
+  ssl: {
+    rejectUnauthorized: false,
+  },
   port: portNumber,
   database: process.env.POSTGRES_DATABASE,
   user: process.env.POSTGRES_USER,
