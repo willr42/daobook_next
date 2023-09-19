@@ -45,6 +45,7 @@ const getUserByEmail = async (db: postgres.Sql, email: string) => {
 };
 
 const getUserByAccount = async (db: postgres.Sql, providerAccountId: string) => {
+  console.log("database: ", db);
   const [foundUser]: [User?] = await db`
   SELECT ${db(getUserCols)}
   FROM users
