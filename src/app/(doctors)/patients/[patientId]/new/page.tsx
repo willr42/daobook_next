@@ -4,10 +4,10 @@ import ConsultForm from "@/components/ConsultForm";
 import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { action } from "./newConsultAction";
-import { Consult } from "@/types";
+import { ConsultFormData } from "../[consultId]/page";
 
 const NewConsult = ({ params }: { params: { patientId: string } }) => {
-  const { handleSubmit, register, reset, formState, setError } = useForm<Consult>({
+  const { handleSubmit, register, reset, formState, setError } = useForm<ConsultFormData>({
     reValidateMode: "onChange",
   });
 
@@ -19,15 +19,16 @@ const NewConsult = ({ params }: { params: { patientId: string } }) => {
     }
     data.consultTime = new Date(data.consultTime);
 
-    startTransition(async () => {
-      const newConsult = await action(data);
+    startTransition(() => {
+      const newConsult = action(data);
 
-      if (newConsult?.error) {
-        setError("root.serverError", {
-          message: newConsult?.error,
-        });
-      }
-      return undefined;
+      newConsult.then((result) => {
+        if (result?.error) {
+          setError("root.serverError", {
+            message: result?.error,
+          });
+        }
+      });
     });
   });
 

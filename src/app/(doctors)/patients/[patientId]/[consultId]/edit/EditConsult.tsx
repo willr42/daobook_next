@@ -4,10 +4,11 @@ import ConsultForm from "@/components/ConsultForm";
 import { Consult } from "@/types";
 import { startTransition } from "react";
 import { useForm } from "react-hook-form";
-import { FormData, action } from "./editConsultAction";
+import { action } from "./editConsultAction";
+import { ConsultFormData } from "../page";
 
 const EditConsult = ({ consultData }: { consultData: Consult }) => {
-  const { handleSubmit, register, reset, formState, setError } = useForm<FormData>({
+  const { handleSubmit, register, reset, formState, setError } = useForm<ConsultFormData>({
     reValidateMode: "onChange",
   });
 
@@ -17,16 +18,19 @@ const EditConsult = ({ consultData }: { consultData: Consult }) => {
     data.patientId = consultData.patientId;
     data.consultTime = new Date(data.consultTime);
 
-    startTransition(async () => {
-      const updatedConsult = await action(data);
+    startTransition(() => {
+      const updatedConsult = action(data);
 
-      if (updatedConsult?.error) {
-        setError("root.serverError", {
-          message: updatedConsult?.error,
-        });
-      }
+      updatedConsult.then((result) => {
+        if (result?.error) {
+          setError("root.serverError", {
+            message: result?.error,
+          });
+        }
+      });
     });
   });
+
   return (
     <>
       <h1 className="text-xl">Edit Consult</h1>

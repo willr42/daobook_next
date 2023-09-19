@@ -2,23 +2,9 @@
 
 import { updateConsult } from "@/db/consultQueries";
 import sql from "@/db/db";
+import { ConsultFormData } from "../page";
 
-export type FormData = {
-  patientId: string;
-  id: string;
-  consultId: string;
-  consultTime: Date;
-  mainComplaint: string;
-  sessionNotes: string;
-  tongue: string;
-  pulse: string;
-  prescriptionName: string;
-  prescriptionComposition: string;
-  prescriptionDosage: string;
-  prescriptionNotes: string;
-};
-
-export async function action(data: FormData) {
+export async function action(data: ConsultFormData) {
   const finalData = data;
 
   try {
