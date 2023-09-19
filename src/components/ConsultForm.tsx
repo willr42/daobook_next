@@ -5,13 +5,14 @@ import { FormState, UseFormRegister, UseFormReset } from "react-hook-form";
 import DateInput from "./DateInput";
 import Input from "./Input";
 import { Consult } from "@/types";
+import { ConsultFormData } from "@/app/(doctors)/patients/[patientId]/[consultId]/page";
 
 type ConsultFormProps = {
   onSubmit: FormEventHandler;
   existingData?: Consult;
-  register: UseFormRegister<FormData>;
-  reset: UseFormReset<FormData>;
-  formState: FormState<FormData>;
+  register: UseFormRegister<ConsultFormData>;
+  reset: UseFormReset<ConsultFormData>;
+  formState: FormState<ConsultFormData>;
 };
 
 const ConsultForm = ({ onSubmit, existingData, register, formState, reset }: ConsultFormProps) => {

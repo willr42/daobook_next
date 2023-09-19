@@ -1,12 +1,12 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { SessionWithId, authOptions } from "@/app/api/auth/[...nextauth]/route";
 import sql from "@/db/db";
 import { createNewPatient } from "@/db/patientQueries";
 import { getServerSession } from "next-auth";
 
 export type FormData = {
-  doctorId: string;
+  doctorId: string | null | undefined;
   firstName: string;
   lastName: string;
   email: string;
@@ -17,10 +17,13 @@ export type FormData = {
 };
 
 export async function action(data: FormData) {
-  const sessionData = await getServerSession(authOptions);
+  const sessionData = (await getServerSession(authOptions)) as SessionWithId;
   const finalData = data;
-  finalData.doctorId = sessionData?.user.id;
+  finalData.doctorId = sessionData?.user?.id;
   try {
+    if (!finalData.doctorId) {
+      throw new Error("Something went wrong");
+    }
     const newPatient = await createNewPatient(sql, data);
     return { data: newPatient, error: null };
   } catch (e) {

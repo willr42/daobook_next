@@ -15,24 +15,33 @@ export interface SessionWithId extends Session {
   };
 }
 
-export const authOptions: NextAuthOptions = {
-  providers: [
+let providers = [];
+
+if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
+  providers.push(
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-    }),
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER,
-        port: process.env.EMAIL_SERVER_PORT,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASS,
-        },
+    })
+  );
+}
+
+providers.push(
+  EmailProvider({
+    server: {
+      host: process.env.EMAIL_SERVER,
+      port: process.env.EMAIL_SERVER_PORT,
+      auth: {
+        user: process.env.EMAIL_SERVER_USER,
+        pass: process.env.EMAIL_SERVER_PASS,
       },
-      from: process.env.EMAIL_SERVER_USER,
-    }),
-  ],
+    },
+    from: process.env.EMAIL_SERVER_USER,
+  })
+);
+
+export const authOptions: NextAuthOptions = {
+  providers,
   adapter: MyAdapter(sql),
   callbacks: {
     session: ({ session, user }) => {

@@ -3,6 +3,21 @@ import { getConsult } from "@/db/consultQueries";
 import sql from "@/db/db";
 import { Consult } from "@/types";
 
+export type ConsultFormData = {
+  patientId: string;
+  id: string;
+  consultId: string;
+  consultTime: Date;
+  mainComplaint: string;
+  sessionNotes: string;
+  tongue: string;
+  pulse: string;
+  prescriptionName: string;
+  prescriptionComposition: string;
+  prescriptionDosage: string;
+  prescriptionNotes: string;
+};
+
 const getConsultData = async (patientId: string, consultId: string) => {
   const res = await getConsult(sql, patientId, consultId);
   return res;
