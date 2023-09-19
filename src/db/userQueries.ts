@@ -1,7 +1,8 @@
 import { User, UserToInsert } from "@/types";
+import { AdapterUser } from "next-auth/adapters";
 import postgres from "postgres";
 
-const createUser = async (db: postgres.Sql, doctor: UserToInsert) => {
+const createUser = async (db: postgres.Sql, doctor: Omit<AdapterUser, "id">) => {
   const [dbUser]: [User?] = await db`
       INSERT INTO
       users ${db(doctor)}
@@ -57,7 +58,10 @@ const getUserByAccount = async (db: postgres.Sql, providerAccountId: string) => 
   return foundUser;
 };
 
-const updateUserData = async (db: postgres.Sql, user: User) => {
+const updateUserData = async (
+  db: postgres.Sql,
+  user: Partial<AdapterUser> & Pick<AdapterUser, "id">
+) => {
   const [updatedUser]: [User?] = await db`
   UPDATE users
   SET ${db(user)}

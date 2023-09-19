@@ -18,18 +18,18 @@ export default function NewPatientForm() {
     reset,
   } = useForm<FormData>({ reValidateMode: "onChange" });
 
-  const [newPatientId, setNewPatientId] = useState("");
+  const [newPatientId, setNewPatientId] = useState<string | undefined>();
 
   const onSubmit = handleSubmit((data) => {
     startTransition(async () => {
       const newPatient = await action(data);
 
-      if (newPatient.error) {
+      if (newPatient?.error) {
         setError("root.serverError", {
           message: newPatient?.error,
         });
       } else {
-        setNewPatientId(newPatient.data.patientId);
+        setNewPatientId(newPatient?.data?.patientId);
       }
     });
   });

@@ -5,7 +5,6 @@ import { Consult } from "@/types";
 import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { FormData, action } from "./editConsultAction";
-import { redirect } from "next/navigation";
 
 const EditConsult = ({ consultData }: { consultData: Consult }) => {
   const { handleSubmit, register, reset, formState, setError } = useForm<FormData>({

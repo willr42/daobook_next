@@ -2,7 +2,6 @@
 
 import { updateConsult } from "@/db/consultQueries";
 import sql from "@/db/db";
-import { redirect } from "next/navigation";
 
 export type FormData = {
   patientId: string;

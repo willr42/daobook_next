@@ -1,8 +1,9 @@
-import { Account, Session, User } from "@/types";
+import { Account, Session } from "@/types";
 import postgres from "postgres";
 import { getUserById } from "./userQueries";
+import { AdapterAccount, AdapterSession } from "next-auth/adapters";
 
-const createAccount = async (db: postgres.Sql, account: Account) => {
+const createAccount = async (db: postgres.Sql, account: AdapterAccount) => {
   const [dbAccount]: [Account?] = await db`
       INSERT INTO
       accounts ${db(account)}
@@ -61,7 +62,7 @@ const getSessionAndUser = async (db: postgres.Sql, sessionToken: string) => {
 
 const updateSession = async (
   db: postgres.Sql,
-  sessionData: { sessionToken: string; expires: Date }
+  sessionData: Partial<AdapterSession> & Pick<AdapterSession, "sessionToken">
 ) => {
   const [updatedSession] = await db`
   UPDATE sessions
@@ -69,17 +70,20 @@ const updateSession = async (
   WHERE session_token = ${sessionData.sessionToken}
   RETURNING *`;
 
-  return updatedSession;
+  return updatedSession as AdapterSession;
 };
 
-const deleteSession = async (db: postgres.Sql, sessionToken) => {
+const deleteSession = async (db: postgres.Sql, sessionToken: string) => {
   const deletedSession = await db`
     DELETE FROM sessions
     WHERE session_token = ${sessionToken}`;
   return deletedSession.count;
 };
 
-const createVerificationToken = async (db: postgres.Sql, verificationTokenData) => {
+const createVerificationToken = async (
+  db: postgres.Sql,
+  verificationTokenData: { identifier: string; expires: Date; token: string }
+) => {
   const [verificationToken] = await db`
       INSERT INTO
       verification_tokens ${db(verificationTokenData)}
@@ -93,7 +97,10 @@ const createVerificationToken = async (db: postgres.Sql, verificationTokenData) 
   return verificationToken;
 };
 
-const UseVerificationToken = async (db: postgres.Sql, verificationTokenData) => {
+const UseVerificationToken = async (
+  db: postgres.Sql,
+  verificationTokenData: { identifier: string; token: string }
+) => {
   const [foundToken] = await db`
   SELECT ${db(["identifier", "expires", "token"])}
   FROM verification_tokens
