@@ -1,6 +1,6 @@
 # Daobook - Next Edition
 
-After creating [Daobook](https://www.daobook.com.au/) for my final project at CoderAcademy, I re-created it in NextJS using the latest `app` router, Server Actions, and [Auth.js](authjs.dev/) including building my own custom adapter.
+After creating [Daobook](https://www.daobook.com.au/) [(See that repo here)](https://github.com/danwillcoder/dao-book_frontend) for my final project as a group project for CoderAcademy, I re-created it in NextJS using the latest `app` router, Server Actions, and [Auth.js](authjs.dev/) including building my own custom adapter.
 
 See it live here: [Daobook Next](https://daobook-next.vercel.app).
 
